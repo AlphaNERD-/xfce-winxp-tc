@@ -23,6 +23,27 @@
 #       different distros... mainly just dpkg
 #
 
+# Added distid.txt to force a specific distro
+# in case this script misidentifies the distro
+if [ -f "distid.txt" ]; then
+
+    while IFS= read -r line
+    do
+        case $line in
+            DIST_ID=*)
+                export DIST_ID="${line#*=}"
+                ;;
+            DIST_ID_EXT=*)
+                export DIST_ID_EXT="${line#*=}"
+                ;;
+        esac
+    done < "$FILE"
+    
+    if [ -z "$DIST_ID_EXT" ]; then
+        export DIST_ID_EXT = "std"
+    fi
+fi
+
 # Check Arch Linux
 #
 which pacman >/dev/null 2>&1
