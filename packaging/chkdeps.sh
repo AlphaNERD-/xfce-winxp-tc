@@ -28,7 +28,7 @@ DEPMAP_PY="${REPO_ROOT}/tools/bldutils/depmap/depmap.py"
 OPT_BUILDLIST="${SCRIPTDIR}/targets"
 OPT_USE_LOCAL_LIBS=0
 
-while getopts "c:hl:f" opt;
+while getopts "c:hl" opt;
 do
     case "${opt}" in
         c)
@@ -41,16 +41,13 @@ do
             echo " -c : provide a list of components (default 'targets')"
             echo " -h : display this help screen"
             echo " -l : use wintc libraries compiled here, not system"
-            echo " -f : skip distro id and force package format"
             echo ""
 
             exit 0
             ;;
+
         l)
             OPT_USE_LOCAL_LIBS=1
-            ;;
-        f)
-            export DIST_ID="${OPTARG}"
             ;;
     esac
 done
@@ -220,14 +217,12 @@ fi
 
 # Identify our distro
 #
-if [[ -z "$DIST_ID" ]] then
-    . "${SH_DISTID}"
+. "${SH_DISTID}"
 
-    if [[ $? -gt 0 ]]
-    then
-        echo "Failed to identify distribution."
-        exit 1
-    fi
+if [[ $? -gt 0 ]]
+then
+    echo "Failed to identify distribution."
+    exit 1
 fi
 
 # Iterate through components to build now, identify their deps

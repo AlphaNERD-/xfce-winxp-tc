@@ -36,7 +36,7 @@ OPT_OUTPUT_DIR=""
 OPT_SKU="xpclient-pro"
 OPT_SKIP_PACKAGING=0
 
-while getopts "c:dho:s:z:fe" opt;
+while getopts "c:dho:s:z" opt;
 do
     case "${opt}" in
         c)
@@ -55,12 +55,11 @@ do
             echo " -o : specify output directory for packages"
             echo " -s : specify SKU to build (default xpclient-pro)"
             echo " -z : skip packaging steps, compile only"
-            echo " -f : skip distro id and force package format"
-            echo " -e : skip distro ext id and force extension"
             echo ""
 
             exit 0
             ;;
+
         o)
             OPT_OUTPUT_DIR="${OPTARG}"
             ;;
@@ -68,17 +67,10 @@ do
         s)
             OPT_SKU="${OPTARG}"
             ;;
+
         z)
             OPT_SKIP_PACKAGING=1
             ;;
-        f)
-            export DIST_ID="${OPTARG}"
-            export DIST_ID_EXT="std"
-            ;;
-        e)
-            export DIST_ID_EXT="${OPTARG}"
-            ;;
-
     esac
 done
 
@@ -195,9 +187,9 @@ check_present()
 #
 # MAIN SCRIPT
 #
-
 check_present "${SH_BUILD}"
 check_present "${SH_CHKDEPS}"
+check_present "${SH_DISTID}"
 check_present "${SH_GENTAG}"
 check_present "${SH_PACKAGE}"
 
@@ -209,18 +201,13 @@ fi
 
 # Identify our distro
 #
+. "${SH_DISTID}"
 
-if [[ -z "$DIST_ID" ]] then
-    check_present "${SH_DISTID}"
-    . "${SH_DISTID}"
-
-    if [[ $? -gt 0 ]]
-    then
-        echo "Failed to identify distribution."
-        exit 1
-    fi
+if [[ $? -gt 0 ]]
+then
+    echo "Failed to identify distribution."
+    exit 1
 fi
-
 
 # Generate build tag
 #

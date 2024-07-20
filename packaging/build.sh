@@ -48,8 +48,6 @@ do
             echo " -h : display this help screen"
             echo " -l : use wintc libraries compiled here, not system"
             echo " -s : specify SKU to build (default xpclient-pro)"
-            echo " -f : skip distro id and force package format"
-            echo " -e : skip distro ext id and force extension"
             echo ""
 
             exit 0
@@ -61,13 +59,6 @@ do
 
         s)
             OPT_SKU="${OPTARG}"
-            ;;
-        f)
-            export DIST_ID="${OPTARG}"
-            export DIST_ID_EXT="std"
-            ;;
-        e)
-            export DIST_ID_EXT="${OPTARG}"
             ;;
     esac
 done
@@ -106,9 +97,7 @@ fi
 #
 dist_prefix="/usr"
 
-if [[ -z "$DIST_ID" ]] then
-    . "${SH_DISTID}"
-fi
+. "${SH_DISTID}"
 
 if [[ $? -gt 0 ]]
 then
