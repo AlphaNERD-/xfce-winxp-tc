@@ -214,7 +214,7 @@ else
         echo "Failed to identify distribution."
         exit 1
     fi
-if
+fi
 
 
 # Generate build tag
