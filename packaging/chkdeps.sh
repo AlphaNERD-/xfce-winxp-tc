@@ -217,12 +217,14 @@ fi
 
 # Identify our distro
 #
-. "${SH_DISTID}"
+if [[ -z "$DIST_ID" && -z "$1" ]]
+    . "${SH_DISTID}"
 
-if [[ $? -gt 0 ]]
-then
-    echo "Failed to identify distribution."
-    exit 1
+    if [[ $? -gt 0 ]]
+    then
+        echo "Failed to identify distribution."
+        exit 1
+    fi
 fi
 
 # Iterate through components to build now, identify their deps
