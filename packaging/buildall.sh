@@ -72,11 +72,11 @@ do
             OPT_SKIP_PACKAGING=1
             ;;
         f)
-            DIST_ID="${OPTARG}"
-            DIST_ID_EXT="std"
+            export DIST_ID="${OPTARG}"
+            export DIST_ID_EXT="std"
             ;;
         e)
-            DIST_ID_EXT="${OPTARG}"
+            export DIST_ID_EXT="${OPTARG}"
             ;;
 
     esac

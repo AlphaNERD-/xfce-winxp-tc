@@ -50,7 +50,7 @@ do
             OPT_USE_LOCAL_LIBS=1
             ;;
         f)
-            DIST_ID="${OPTARG}"
+            export DIST_ID="${OPTARG}"
             ;;
     esac
 done
