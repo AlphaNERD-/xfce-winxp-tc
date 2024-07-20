@@ -217,7 +217,7 @@ fi
 
 # Identify our distro
 #
-if [[ -z "$DIST_ID" && -z "$1" ]]
+if [[ -z "$DIST_ID" && -z "$1" ]] then
     . "${SH_DISTID}"
 
     if [[ $? -gt 0 ]]
