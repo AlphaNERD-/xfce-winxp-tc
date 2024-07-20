@@ -37,10 +37,15 @@ if [ -f "distid.txt" ]; then
                 export DIST_ID_EXT="${line#*=}"
                 ;;
         esac
-    done < "$FILE"
+    done < "distid.txt"
     
+    if [ -z "$DIST_ID" ]; then
+        echo "Malformed distid.txt"
+        return 1
+    fi
+
     if [ -z "$DIST_ID_EXT" ]; then
-        export DIST_ID_EXT = "std"
+        export DIST_ID_EXT="std"
     fi
 fi
 
