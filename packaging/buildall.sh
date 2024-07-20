@@ -202,20 +202,20 @@ fi
 # Identify our distro
 #
 
-if [[ "$1" == --pkg=* ]]; then
+if [[ "$1" == --pkg=* ]] then
     DIST_ID="${1#=--pkg}"
     DIST_ID_EXT="std"
 else
     check_present "${SH_DISTID}"
     . "${SH_DISTID}"
+
+    if [[ $? -gt 0 ]]
+    then
+        echo "Failed to identify distribution."
+        exit 1
+    fi
 if
 
-
-if [[ $? -gt 0 ]]
-then
-    echo "Failed to identify distribution."
-    exit 1
-fi
 
 # Generate build tag
 #
