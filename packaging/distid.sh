@@ -22,9 +22,16 @@
 #       I think it's unlikely the other package managers will be installed on
 #       different distros... mainly just dpkg
 #
+# NOTE from Julia: No! That did not solve jack! I'm sitting here trying to work 
+#                  around the exact opposite problem! I'm on a Debian-based distro
+#                  which has also rpm installed (MX-Linux). How are you gonna detect
+#                  that, genius? You and i both know that the we will have to inevitably
+#                  face the neofetch source code. But until then here's my workaround.
 
 # Added distid.txt to force a specific distro
 # in case this script misidentifies the distro
+# Format: DIST_ID=<distro> (e.g. DIST_ID=archpkg)
+#         DIST_ID_EXT=<distro> (e.g. DIST_ID_EXT=std, optional)
 if [ -f "distid.txt" ]; then
 
     while IFS= read -r line
@@ -47,6 +54,8 @@ if [ -f "distid.txt" ]; then
     if [ -z "$DIST_ID_EXT" ]; then
         export DIST_ID_EXT="std"
     fi
+
+    return 0
 fi
 
 # Check Arch Linux
