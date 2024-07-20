@@ -36,7 +36,7 @@ OPT_OUTPUT_DIR=""
 OPT_SKU="xpclient-pro"
 OPT_SKIP_PACKAGING=0
 
-while getopts "c:dho:s:z" opt;
+while getopts "c:dho:s:z:fe" opt;
 do
     case "${opt}" in
         c)
@@ -55,11 +55,12 @@ do
             echo " -o : specify output directory for packages"
             echo " -s : specify SKU to build (default xpclient-pro)"
             echo " -z : skip packaging steps, compile only"
+            echo " -f : skip distro id and force package format"
+            echo " -e : skip distro ext id and force extension"
             echo ""
 
             exit 0
             ;;
-
         o)
             OPT_OUTPUT_DIR="${OPTARG}"
             ;;
@@ -67,10 +68,17 @@ do
         s)
             OPT_SKU="${OPTARG}"
             ;;
-
         z)
             OPT_SKIP_PACKAGING=1
             ;;
+        f)
+            DIST_ID="${OPTARG}"
+            DIST_ID_EXT="std"
+            ;;
+        e)
+            DIST_ID_EXT="${OPTARG}"
+            ;;
+
     esac
 done
 
@@ -202,15 +210,7 @@ fi
 # Identify our distro
 #
 
-if [[ -n "$1" ]] then
-    DIST_ID="$1"
-
-    if [[ -n "$2" ]] then
-        DIST_ID_EXT="$2"
-    else
-        DIST_ID_EXT="std"
-    fi
-else
+if [[ -z "$DIST_ID" ]] then
     check_present "${SH_DISTID}"
     . "${SH_DISTID}"
 
