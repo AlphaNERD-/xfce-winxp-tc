@@ -204,7 +204,12 @@ fi
 
 if [[ -n "$1" ]] then
     DIST_ID="$1"
-    DIST_ID_EXT="std"
+
+    if [[ -n "$2" ]] then
+        DIST_ID_EXT="$2"
+    else
+        DIST_ID_EXT="std"
+    fi
 else
     check_present "${SH_DISTID}"
     . "${SH_DISTID}"
