@@ -187,9 +187,9 @@ check_present()
 #
 # MAIN SCRIPT
 #
+
 check_present "${SH_BUILD}"
 check_present "${SH_CHKDEPS}"
-check_present "${SH_DISTID}"
 check_present "${SH_GENTAG}"
 check_present "${SH_PACKAGE}"
 
@@ -201,7 +201,15 @@ fi
 
 # Identify our distro
 #
-. "${SH_DISTID}"
+
+if [[ "$1" == --pkg=* ]]; then
+    DIST_ID="${1#=--pkg}"
+    DIST_ID_EXT="std"
+else
+    check_present "${SH_DISTID}"
+    . "${SH_DISTID}"
+if
+
 
 if [[ $? -gt 0 ]]
 then
