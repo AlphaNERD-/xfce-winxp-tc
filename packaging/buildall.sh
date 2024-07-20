@@ -202,8 +202,8 @@ fi
 # Identify our distro
 #
 
-if [[ "$1" == --pkg=* ]] then
-    DIST_ID="${1#=--pkg}"
+if [[ -n "$1" ]] then
+    DIST_ID="$1"
     DIST_ID_EXT="std"
 else
     check_present "${SH_DISTID}"
